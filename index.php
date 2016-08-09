@@ -3,7 +3,7 @@
 require_once("vendor/autoload.php");
 
 try {
-    \Tinify\setKey("5fSltsFv9N2s46E2H44NPx3GPXtAjVc8");
+    \Tinify\setKey("test");
     \Tinify\validate();
 } catch(\Tinify\Exception $e) {
 
