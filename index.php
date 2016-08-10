@@ -1,38 +1,23 @@
-<?php 
-
+<?php
 require_once("vendor/autoload.php");
 
-try {
-    \Tinify\setKey("test");
-    \Tinify\validate();
-} catch(\Tinify\Exception $e) {
+// require the compressor class
+require_once("compressor.php");
 
-    die("Incorrect API");
-}
+// get the api key from a file so that it doesn't get added to repo
+$apiKey = file_get_contents("apikey");
 
-$compressionsThisMonth = \Tinify\compressionCount();
+// create the new compressor
+$compressor = new ImageCompressor(
+	$apiKey,
+	array(
+		'jpg',
+		'jpeg',
+		'png',
+	)
+);
 
-$dir = 'images/';
+// compress our directory
+$compressor->run('images');
 
-$images = scandir($dir);
-
-$images = array_diff($images, array('.', '..'));
- 
-foreach ($images as $image) {
-
-	echo ('Compressing '.$dir.$image);
-
-	echo PHP_EOL;
-
-    $source = \Tinify\fromFile($dir.$image);
-
-    $source->toFile($dir.$image);
-}
- 
-echo "Compression has been completed";
-
-echo PHP_EOL;
-
-echo ( 'Total images compressed for this month '.$compressionsThisMonth);
-
-?>
+echo 'Total images compressed for this month ' . $compressor->getCompressionCount() . PHP_EOL;
