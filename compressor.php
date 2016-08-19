@@ -41,8 +41,8 @@ class ImageCompressor
 		try {
 			$this->debug("Compressing: '{$file->getPathname()}'");
 
-			//$source = \Tinify\Source::fromFile($file->getRealPath());
-			//$source->toFile($file->getRealPath());
+			$source = \Tinify\Source::fromFile($file->getRealPath());
+			$source->toFile($file->getRealPath());
 		} catch(Exception $e) {
 			$this->error("Exception while compressing file '{$file->getPathname()}'");
 		}
